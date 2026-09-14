@@ -1,0 +1,615 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="JobLens——基于工具调用和RAG的实习岗位分析与面试准备Agent项目路线图">
+  <title>JobLens 项目开发与学习路线图</title>
+  <style>
+    :root {
+      --ink: #162033;
+      --muted: #637083;
+      --paper: #ffffff;
+      --canvas: #f2f5f9;
+      --line: #dce3ec;
+      --blue: #2858d8;
+      --blue-soft: #edf3ff;
+      --green: #087f5b;
+      --green-soft: #e9f8f2;
+      --amber: #a05a00;
+      --amber-soft: #fff5df;
+      --red: #b42318;
+      --shadow: 0 14px 40px rgba(22, 32, 51, .09);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--canvas);
+      font-family: "Segoe UI", "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+      line-height: 1.75;
+    }
+
+    a { color: var(--blue); }
+
+    code {
+      padding: .12em .38em;
+      border-radius: 5px;
+      background: #eef1f5;
+      font-family: Consolas, "SFMono-Regular", monospace;
+      font-size: .92em;
+    }
+
+    .hero {
+      padding: 72px 24px 62px;
+      color: #fff;
+      background:
+        radial-gradient(circle at 82% 18%, rgba(101, 149, 255, .45), transparent 30%),
+        linear-gradient(135deg, #142f75 0%, #2858d8 55%, #3974ee 100%);
+    }
+
+    .hero-inner, .layout { max-width: 1180px; margin: 0 auto; }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      opacity: .82;
+    }
+
+    h1 {
+      max-width: 880px;
+      margin: 0;
+      font-size: clamp(34px, 6vw, 62px);
+      line-height: 1.12;
+      letter-spacing: -.035em;
+    }
+
+    .hero p {
+      max-width: 780px;
+      margin: 22px 0 0;
+      font-size: 18px;
+      opacity: .9;
+    }
+
+    .badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+
+    .badge {
+      padding: 7px 12px;
+      border: 1px solid rgba(255, 255, 255, .3);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .1);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 250px minmax(0, 1fr);
+      gap: 28px;
+      padding: 34px 24px 72px;
+    }
+
+    nav {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    nav strong { display: block; margin-bottom: 9px; font-size: 14px; }
+    nav a {
+      display: block;
+      padding: 6px 9px;
+      border-radius: 7px;
+      color: var(--muted);
+      font-size: 13px;
+      text-decoration: none;
+    }
+    nav a:hover { color: var(--blue); background: var(--blue-soft); }
+
+    main { min-width: 0; }
+
+    section {
+      margin-bottom: 24px;
+      padding: 32px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    h2 { margin: 0 0 18px; font-size: 26px; line-height: 1.28; }
+    h3 { margin: 28px 0 10px; font-size: 19px; line-height: 1.4; }
+    h4 { margin: 20px 0 8px; font-size: 16px; }
+    p { margin: 9px 0; }
+    ul, ol { padding-left: 22px; }
+    li + li { margin-top: 5px; }
+
+    .lead {
+      padding: 20px 22px;
+      border-left: 5px solid var(--blue);
+      border-radius: 10px;
+      background: var(--blue-soft);
+      font-size: 17px;
+    }
+
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fbfcfe;
+    }
+    .card strong { display: block; margin-bottom: 6px; }
+    .card p { margin: 0; color: var(--muted); font-size: 14px; }
+
+    .flow {
+      overflow-x: auto;
+      margin: 18px 0;
+      padding: 22px;
+      border-radius: 12px;
+      background: #101828;
+      color: #e8efff;
+      font-family: Consolas, monospace;
+      font-size: 14px;
+      line-height: 1.9;
+      white-space: pre;
+    }
+
+    .phase {
+      position: relative;
+      margin-top: 20px;
+      padding: 24px 24px 22px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: linear-gradient(180deg, #fff, #fbfcff);
+    }
+
+    .phase-label {
+      display: inline-block;
+      margin-bottom: 8px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      color: var(--blue);
+      background: var(--blue-soft);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .phase h3 { margin: 0 0 8px; }
+    .phase .time { color: var(--muted); font-size: 14px; }
+
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li { position: relative; padding-left: 27px; }
+    .checklist li::before {
+      position: absolute;
+      left: 0;
+      content: "✓";
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    .note, .warning, .success {
+      margin: 16px 0;
+      padding: 15px 17px;
+      border-radius: 10px;
+    }
+    .note { color: #274067; background: var(--blue-soft); }
+    .warning { color: #784300; background: var(--amber-soft); }
+    .success { color: #075f46; background: var(--green-soft); }
+
+    table {
+      width: 100%;
+      margin: 16px 0;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td { padding: 12px 13px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: #f5f7fb; }
+
+    .footer {
+      padding: 28px 24px 50px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    @media (max-width: 860px) {
+      .layout { grid-template-columns: 1fr; }
+      nav { position: static; }
+      .grid, .grid.three { grid-template-columns: 1fr; }
+      section { padding: 24px 20px; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .hero { padding: 38px 24px; print-color-adjust: exact; }
+      .layout { display: block; padding: 20px 0; }
+      nav { display: none; }
+      section { break-inside: avoid; box-shadow: none; }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">Beginner-to-Portfolio Roadmap</p>
+      <h1>JobLens 项目开发与学习路线图</h1>
+      <p>基于工具调用和 RAG 的实习岗位分析与面试准备 Agent。从第一个可运行版本开始，逐步学习 Agent、持久化、RAG、LangGraph、评测与部署。</p>
+      <div class="badges">
+        <span class="badge">新手友好</span>
+        <span class="badge">5–7 周</span>
+        <span class="badge">Python</span>
+        <span class="badge">Tool Calling</span>
+        <span class="badge">RAG</span>
+        <span class="badge">LangGraph</span>
+        <span class="badge">可评测</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav aria-label="目录">
+      <strong>文档目录</strong>
+      <a href="#goal">1. 项目目标</a>
+      <a href="#architecture">2. 最终产品</a>
+      <a href="#rules">3. 产品边界</a>
+      <a href="#roadmap">4. 分阶段路线</a>
+      <a href="#learning-order">5. 学习顺序</a>
+      <a href="#unknown">6. 遇到未知技术</a>
+      <a href="#debug">7. 调试方法</a>
+      <a href="#ai">8. 使用 AI 辅助</a>
+      <a href="#schedule">9. 周计划</a>
+      <a href="#done">10. 完成标准</a>
+    </nav>
+
+    <main>
+      <section id="goal">
+        <h2>1. 项目目标</h2>
+        <div class="lead">先做一个很小但能运行的版本；遇到缺少的知识时，只学习当前功能所需的最小部分。</div>
+        <p>JobLens 接收用户简历、实习岗位 JD，以及用户的项目与学习资料，生成有证据的岗位匹配分析、能力差距、学习计划和面试问题，并管理岗位投递状态。</p>
+        <div class="grid three">
+          <div class="card"><strong>对用户有用</strong><p>可以直接辅助本人筛选岗位和准备面试。</p></div>
+          <div class="card"><strong>对学习有用</strong><p>循序学习结构化输出、工具调用、RAG 与 Agent 编排。</p></div>
+          <div class="card"><strong>对求职有用</strong><p>有明确场景、工程结构、测试指标和可展示结果。</p></div>
+        </div>
+      </section>
+
+      <section id="architecture">
+        <h2>2. 最终产品能力</h2>
+        <ol>
+          <li>提取岗位要求。</li>
+          <li>提取个人能力和项目证据。</li>
+          <li>逐项匹配岗位要求。</li>
+          <li>区分“匹配、部分匹配、缺少证据、不匹配”。</li>
+          <li>给出能力差距和可执行的学习计划。</li>
+          <li>生成针对性的面试问题。</li>
+          <li>保存岗位和投递状态。</li>
+          <li>从学习资料中检索相关内容，并标注来源。</li>
+          <li>记录 Agent 调用了哪些工具。</li>
+          <li>通过固定评测集验证效果。</li>
+        </ol>
+        <div class="flow">简历 ───────────────┐
+岗位 JD ────────────┼──► JobLens Agent ──► 选择工具 ──► 匹配报告 / 面试题 / 学习计划
+用户问题 ───────────┘                         │
+                                             ├── 简历读取工具
+                                             ├── 岗位分析工具
+                                             ├── 岗位管理工具
+                                             └── 学习资料 RAG</div>
+      </section>
+
+      <section id="rules">
+        <h2>3. 项目边界与安全规则</h2>
+        <div class="grid">
+          <div class="card"><strong>不能编造经历</strong><p>所有能力判断必须引用简历或项目中的原始证据。</p></div>
+          <div class="card"><strong>证据不足就说明</strong><p>没有找到相关经历时输出“缺少证据”，不能自动脑补。</p></div>
+          <div class="card"><strong>不自动投递</strong><p>第一版只提供分析、记录和准备，不对外发送简历。</p></div>
+          <div class="card"><strong>保护个人信息</strong><p>公开仓库只放虚构简历；真实简历、API Key 与投递记录不提交。</p></div>
+        </div>
+      </section>
+
+      <section id="roadmap">
+        <h2>4. 分阶段开发路线</h2>
+
+        <article class="phase">
+          <span class="phase-label">阶段 0</span>
+          <h3>准备环境和模拟数据</h3>
+          <div class="time">预计：1 天</div>
+          <h4>要完成的内容</h4>
+          <ul>
+            <li>安装 Python，创建虚拟环境并初始化 Git。</li>
+            <li>准备一份虚构简历和 5 份模拟岗位 JD。</li>
+            <li>用 <code>.env</code> 保存 API Key，并配置 <code>.gitignore</code>。</li>
+            <li>创建源码、测试、数据和文档目录。</li>
+          </ul>
+          <h4>只需学习</h4>
+          <p>Python 虚拟环境、依赖、Git 仓库和环境变量分别解决什么问题。</p>
+          <h4>验收标准</h4>
+          <ul class="checklist">
+            <li>程序能读取模拟简历与岗位文件。</li>
+            <li>API Key 不会进入 Git 记录。</li>
+            <li>项目可以通过一条命令启动。</li>
+          </ul>
+        </article>
+
+        <article class="phase">
+          <span class="phase-label">阶段 1</span>
+          <h3>完成非 Agent 的岗位分析器</h3>
+          <div class="time">预计：3–5 天</div>
+          <p>先用固定流程验证核心功能：读取简历、解析 JD、匹配证据并生成报告。此时还不使用 LangGraph。</p>
+          <h4>核心函数</h4>
+          <ul>
+            <li><code>parse_resume()</code>：提取技能、项目和证据。</li>
+            <li><code>parse_job_description()</code>：提取岗位要求和重要程度。</li>
+            <li><code>match_requirements()</code>：完成逐项匹配。</li>
+            <li><code>generate_report()</code>：输出结构化报告。</li>
+          </ul>
+          <h4>需要学习</h4>
+          <p>大模型 API、System/User Prompt、JSON、Pydantic、类型标注与基础异常处理。</p>
+          <div class="note"><strong>Pydantic 的简单理解：</strong>它像一张数据表格模板，负责检查大模型有没有按要求填写。</div>
+          <h4>验收标准</h4>
+          <ul class="checklist">
+            <li>能够分析一份简历和一份 JD。</li>
+            <li>输出固定 JSON 结构，非法输出不会让程序直接崩溃。</li>
+            <li>每项匹配结论包含证据；没有证据时输出 <code>insufficient_evidence</code>。</li>
+          </ul>
+        </article>
+
+        <article class="phase">
+          <span class="phase-label">阶段 2</span>
+          <h3>改造成工具调用 Agent</h3>
+          <div class="time">预计：4–6 天</div>
+          <p>将已有 Python 函数变成模型可调用的工具。Agent 根据用户任务选择所需工具，而不是每次执行所有步骤。</p>
+          <h4>第一批工具</h4>
+          <ul>
+            <li><code>read_resume</code></li>
+            <li><code>read_job_description</code></li>
+            <li><code>extract_requirements</code></li>
+            <li><code>find_resume_evidence</code></li>
+            <li><code>generate_interview_questions</code></li>
+            <li><code>save_analysis_report</code></li>
+          </ul>
+          <div class="flow">用户问题 → 模型决定是否调用工具 → 程序执行工具
+        ↑                                  ↓
+        └──────── 工具结果返回模型 ←───────┘
+模型没有新的工具调用时，输出最终答案</div>
+          <h4>必须添加的限制</h4>
+          <ul>
+            <li>单次最多调用 8 次工具，避免无限循环。</li>
+            <li>禁止读取项目范围外的文件。</li>
+            <li>工具失败时返回结构化错误。</li>
+            <li>记录每一次工具调用、耗时和结果状态。</li>
+          </ul>
+          <h4>验收标准</h4>
+          <ul class="checklist">
+            <li>不同问题会触发不同工具组合。</li>
+            <li>工具失败时 Agent 能解释，而不是捏造结果。</li>
+            <li>能够查看完整工具调用记录。</li>
+          </ul>
+        </article>
+
+        <article class="phase">
+          <span class="phase-label">阶段 3</span>
+          <h3>增加岗位管理和持久记忆</h3>
+          <div class="time">预计：3–5 天</div>
+          <p>使用 SQLite 保存岗位名称、公司、JD、匹配结果、投递状态及时间信息。</p>
+          <h4>新增工具</h4>
+          <p><code>save_job</code>、<code>list_jobs</code>、<code>get_job</code>、<code>compare_jobs</code>、<code>update_application_status</code></p>
+          <h4>只需学习</h4>
+          <p>数据库表、唯一 ID，以及 <code>CREATE TABLE</code>、<code>SELECT</code>、<code>INSERT</code>、<code>UPDATE</code>。</p>
+          <h4>验收标准</h4>
+          <ul class="checklist">
+            <li>关闭程序后岗位数据不会丢失。</li>
+            <li>可以保存、查询、比较岗位和修改投递状态。</li>
+            <li>不会重复保存完全相同的岗位。</li>
+          </ul>
+        </article>
+
+        <article class="phase">
+          <span class="phase-label">阶段 4</span>
+          <h3>增加学习资料 RAG</h3>
+          <div class="time">预计：5–7 天</div>
+          <p>RAG 用于检索 Python、RAG、LangGraph、面试题和项目说明等学习资料。短简历直接放入上下文，不需要强行使用 RAG。</p>
+          <div class="flow">文档 → 切分成小段 → Embedding → 保存索引
+                                      ↓
+用户提问 → 生成检索问题 → 找到 Top-K 片段 → 带来源回答</div>
+          <h4>第一版范围</h4>
+          <ul>
+            <li>支持 Markdown/TXT 文档加载。</li>
+            <li>完成简单文本切分、Embedding、相似度检索和 Top 3 返回。</li>
+            <li>回答中显示来源文件。</li>
+          </ul>
+          <div class="warning"><strong>暂时不要加入：</strong>知识图谱、多路召回、reranker、多模态 RAG 和分布式向量数据库。</div>
+          <h4>验收标准</h4>
+          <ul class="checklist">
+            <li>能够导入至少 20 篇学习资料。</li>
+            <li>回答能引用实际检索到的文件和片段。</li>
+            <li>找不到资料时明确说明，不伪造引用。</li>
+          </ul>
+        </article>
+
+        <article class="phase">
+          <span class="phase-label">阶段 5</span>
+          <h3>引入 LangGraph</h3>
+          <div class="time">预计：4–6 天</div>
+          <p>在理解手写 Agent 循环后，再用 LangGraph 组织意图识别、工具执行、证据检查、追问和最终回答。</p>
+          <div class="flow">接收请求 → 识别意图 ─┬─ 岗位匹配 ─┐
+                       ├─ 岗位管理 ─┤
+                       ├─ 学习规划 ─┼─► 执行工具 → 证据检查 ─┬─ 充分 → 结果
+                       └─ 面试准备 ─┘                         └─ 不足 → 追问</div>
+          <h4>需要学习</h4>
+          <p>State、Node、Edge、Conditional Edge、Checkpointer 和 Human-in-the-loop。</p>
+          <h4>验收标准</h4>
+          <ul class="checklist">
+            <li>四类任务可以走不同路线。</li>
+            <li>证据不足时主动追问。</li>
+            <li>运行中断后可以恢复，并能展示节点轨迹。</li>
+          </ul>
+        </article>
+
+        <article class="phase">
+          <span class="phase-label">阶段 6</span>
+          <h3>建立评测系统</h3>
+          <div class="time">预计：4–6 天</div>
+          <p>准备 5 份虚构简历、20 份岗位 JD 和人工标注的正确匹配结果。</p>
+          <h4>建议指标</h4>
+          <ul>
+            <li>岗位技能提取准确率。</li>
+            <li>简历证据匹配准确率。</li>
+            <li>无证据乱判断比例。</li>
+            <li>工具选择正确率和工具调用成功率。</li>
+            <li>任务完成率、平均工具调用次数、响应时间与调用成本。</li>
+          </ul>
+          <h4>验收标准</h4>
+          <ul class="checklist">
+            <li><code>pytest</code> 可以一键运行。</li>
+            <li>至少 20 个固定测试案例。</li>
+            <li>评测结果保存为 JSON 或 Markdown。</li>
+            <li>修改 Prompt 后可以比较新旧版本结果。</li>
+          </ul>
+        </article>
+
+        <article class="phase">
+          <span class="phase-label">阶段 7</span>
+          <h3>界面、部署与作品集</h3>
+          <div class="time">预计：5–7 天</div>
+          <p>最后再做界面。新手优先使用 Streamlit 或 Gradio；后续再考虑 FastAPI + React。</p>
+          <h4>最终页面</h4>
+          <ul>
+            <li>简历上传和岗位 JD 输入。</li>
+            <li>匹配结果、证据表格与能力差距。</li>
+            <li>学习计划、面试问题和岗位管理。</li>
+            <li>Agent 执行轨迹与评测结果。</li>
+          </ul>
+          <h4>工程化交付</h4>
+          <p>Docker、日志、<code>.env.example</code>、README、GitHub Actions、架构图、模拟数据和 2 分钟演示视频。</p>
+        </article>
+      </section>
+
+      <section id="learning-order">
+        <h2>5. 推荐学习顺序</h2>
+        <p>不要按课程目录学习，而要按项目当前需求学习。</p>
+        <table>
+          <thead><tr><th>顺序</th><th>知识</th><th>学到什么程度即可</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Python 环境</td><td>能安装依赖和运行项目</td></tr>
+            <tr><td>2</td><td>大模型 API</td><td>能发送消息并获取结果</td></tr>
+            <tr><td>3</td><td>Prompt</td><td>能约束任务、格式和规则</td></tr>
+            <tr><td>4</td><td>Pydantic</td><td>能定义和验证结构化输出</td></tr>
+            <tr><td>5</td><td>工具调用</td><td>模型能选择并调用 Python 函数</td></tr>
+            <tr><td>6</td><td>Agent 循环</td><td>能多轮执行工具直到完成任务</td></tr>
+            <tr><td>7</td><td>pytest</td><td>能测试普通函数和工具</td></tr>
+            <tr><td>8</td><td>SQLite</td><td>能保存和查询岗位</td></tr>
+            <tr><td>9</td><td>RAG</td><td>能切分、检索和引用文档</td></tr>
+            <tr><td>10</td><td>LangGraph</td><td>能组织状态、节点和分支</td></tr>
+            <tr><td>11</td><td>Streamlit</td><td>能完成基本交互界面</td></tr>
+            <tr><td>12</td><td>Docker / CI</td><td>能一键运行和自动测试</td></tr>
+            <tr><td>13</td><td>MCP</td><td>把已有工具标准化对外暴露</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="unknown">
+        <h2>6. 遇到没有学过的知识时怎么解决</h2>
+        <h3>第一步：把问题问具体</h3>
+        <p>不要只问“怎么学习 RAG”，而要问：“我需要让 JobLens 从 20 个 Markdown 文件中找出最相关的 3 个片段，需要学习哪些最少知识？”</p>
+
+        <h3>第二步：只学习最小概念</h3>
+        <p>实现 RAG 时，第一轮只理解文本切分、Embedding、相似度、Top-K 和如何把检索片段放进 Prompt。不要提前研究大规模向量数据库和 GraphRAG。</p>
+
+        <h3>第三步：先写最小实验</h3>
+        <p>新知识先放在 <code>experiments/</code> 中验证。例如学习 SQLite 时，只实现“建表、插入一个岗位、查询、更新状态”。实验成功后再集成到正式代码。</p>
+
+        <h3>第四步：自己重新实现</h3>
+        <ol>
+          <li>阅读示例。</li>
+          <li>关闭示例。</li>
+          <li>根据理解重新实现。</li>
+          <li>对比差异。</li>
+          <li>补充测试。</li>
+          <li>用自己的话记录设计原因。</li>
+        </ol>
+
+        <h3>第五步：建立学习日志</h3>
+        <div class="flow">问题：为什么模型返回的 JSON 解析失败？
+原因：模型在 JSON 前后增加了解释文字。
+解决：使用结构化输出，并由 Pydantic 验证。
+验证：新增 3 个异常输出测试。</div>
+        <p>如果不能解释一段代码为什么存在，它就暂时不应该进入主项目。</p>
+      </section>
+
+      <section id="debug">
+        <h2>7. 推荐调试顺序</h2>
+        <ol>
+          <li>完整阅读错误信息。</li>
+          <li>确认错误出现在哪个函数。</li>
+          <li>记录该函数的输入。</li>
+          <li>在不调用大模型的情况下单独测试工具。</li>
+          <li>使用固定的模拟模型结果测试流程。</li>
+          <li>最后才检查 Prompt 和模型行为。</li>
+        </ol>
+        <div class="warning">Agent 项目出错后不要第一时间修改 Prompt。很多问题实际来自文件路径、JSON、数据库字段或工具参数。</div>
+      </section>
+
+      <section id="ai">
+        <h2>8. 如何合理使用 AI 辅助开发</h2>
+        <p>AI 可以用于解释概念、拆分任务、审查代码、分析报错、设计测试和模拟面试，但不能代替你理解核心逻辑。</p>
+        <p>每完成一个模块，尝试回答：</p>
+        <ul>
+          <li>这个模块解决什么问题？</li>
+          <li>输入和输出是什么？</li>
+          <li>为什么不用更简单的方法？</li>
+          <li>失败时会发生什么？</li>
+          <li>如何证明它有效？</li>
+          <li>如果不用大模型，这部分能否完成？</li>
+        </ul>
+      </section>
+
+      <section id="schedule">
+        <h2>9. 每周可展示成果</h2>
+        <table>
+          <thead><tr><th>周次</th><th>可展示成果</th></tr></thead>
+          <tbody>
+            <tr><td>第 1 周</td><td>简历和 JD 结构化解析</td></tr>
+            <tr><td>第 2 周</td><td>可调用工具的命令行 Agent</td></tr>
+            <tr><td>第 3 周</td><td>岗位保存、查询和比较</td></tr>
+            <tr><td>第 4 周</td><td>学习资料 RAG 和来源引用</td></tr>
+            <tr><td>第 5 周</td><td>LangGraph 状态机和中断恢复</td></tr>
+            <tr><td>第 6 周</td><td>评测集、测试和 Prompt 优化</td></tr>
+            <tr><td>第 7 周</td><td>网页、Docker、README 和演示视频</td></tr>
+          </tbody>
+        </table>
+        <div class="note">如果时间有限，完成到第 4 周并做好测试，也已经可以作为第一个实习项目。LangGraph、MCP 和网页界面不是判断项目是否成功的前提。</div>
+      </section>
+
+      <section id="done">
+        <h2>10. 项目最终完成标准</h2>
+        <div class="grid">
+          <div class="card"><strong>功能完整</strong><p>岗位解析、证据匹配、面试准备、学习资料检索和岗位管理都能运行。</p></div>
+          <div class="card"><strong>结果可信</strong><p>有引用、有拒绝机制，不编造简历经历或资料来源。</p></div>
+          <div class="card"><strong>工程可靠</strong><p>工具可独立测试，错误可追踪，依赖和启动方式清楚。</p></div>
+          <div class="card"><strong>可以展示</strong><p>拥有模拟数据、评测结果、README、架构图和演示视频。</p></div>
+        </div>
+        <div class="success"><strong>下一步：</strong>从阶段 0 和阶段 1 开始，先建立仓库和虚构数据，再实现“岗位 JD 结构化提取”这一最小功能。</div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="footer">JobLens · 新手 Agent 项目开发路线图</footer>
+</body>
+</html>
