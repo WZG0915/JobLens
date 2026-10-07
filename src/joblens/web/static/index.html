@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="JobLens 本地简历解析与岗位推荐助手">
+  <title>JobLens · 本地求职助手</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">J</div>
+        <div>
+          <strong>JobLens</strong>
+          <span>本地求职助手</span>
+        </div>
+      </div>
+
+      <section class="side-card status-card" aria-labelledby="system-title">
+        <div class="section-label" id="system-title">系统状态</div>
+        <div class="status-row">
+          <span class="status-dot" id="status-dot"></span>
+          <span id="status-text">正在检查本地服务…</span>
+        </div>
+        <div class="status-detail" id="model-name">BGE模型：读取中</div>
+      </section>
+
+      <section class="side-card">
+        <div class="section-label">本地处理流程</div>
+        <ol class="pipeline-list">
+          <li><span>01</span>解析PDF简历</li>
+          <li><span>02</span>生成多视角查询</li>
+          <li><span>03</span>混合检索岗位</li>
+          <li><span>04</span>核对简历证据</li>
+          <li><span>05</span>输出最终排名</li>
+        </ol>
+      </section>
+
+      <div class="privacy-note">
+        <span aria-hidden="true">⌁</span>
+        简历、BGE和岗位库均在本机处理，不会发送到外部Embedding服务。
+      </div>
+    </aside>
+
+    <main class="chat-panel">
+      <header class="chat-header">
+        <div>
+          <p class="eyebrow">LOCAL RAG WORKSPACE</p>
+          <h1>把简历交给我，找到更合适的岗位</h1>
+        </div>
+        <button class="ghost-button" id="clear-button" type="button" disabled>清除会话</button>
+      </header>
+
+      <section class="messages" id="messages" aria-live="polite">
+        <article class="message assistant-message">
+          <div class="avatar" aria-hidden="true">J</div>
+          <div class="bubble">
+            <p>你好，我是JobLens。上传一份PDF简历后，可以直接告诉我：</p>
+            <div class="quick-prompts">
+              <button type="button" data-prompt="解析我的简历">解析我的简历</button>
+              <button type="button" data-prompt="请推荐5个最适合我的岗位">推荐5个岗位</button>
+              <button type="button" data-prompt="帮我找出简历与岗位之间的主要能力差距">查看能力差距</button>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <footer class="composer-wrap">
+        <div class="file-chip hidden" id="file-chip">
+          <span class="file-icon" aria-hidden="true">PDF</span>
+          <span id="file-name"></span>
+          <button type="button" id="remove-file" aria-label="移除选择的文件">×</button>
+        </div>
+        <form class="composer" id="chat-form">
+          <label class="upload-button" for="resume-input" title="上传PDF简历">
+            <span aria-hidden="true">＋</span>
+            <span class="sr-only">上传PDF简历</span>
+          </label>
+          <input id="resume-input" type="file" accept="application/pdf,.pdf" hidden>
+          <textarea id="message-input" rows="1" maxlength="2000" placeholder="上传简历，或输入“推荐5个岗位”…"></textarea>
+          <select id="top-k" aria-label="推荐岗位数量">
+            <option value="3">Top 3</option>
+            <option value="5" selected>Top 5</option>
+            <option value="8">Top 8</option>
+          </select>
+          <button class="send-button" id="send-button" type="submit" aria-label="发送消息">
+            <span>发送</span><span aria-hidden="true">↗</span>
+          </button>
+        </form>
+        <p class="composer-hint">首次推荐需要加载本地BGE模型，通常需要10～20秒。</p>
+      </footer>
+    </main>
+  </div>
+  <template id="recommendation-template">
+    <article class="job-card">
+      <div class="job-rank"></div>
+      <div class="job-main">
+        <div class="job-heading">
+          <div><p class="job-company"></p><h3 class="job-title"></h3></div>
+          <div class="score-ring"><strong></strong><span>综合分</span></div>
+        </div>
+        <div class="score-grid">
+          <div><span>RAG召回</span><strong class="rag-score"></strong></div>
+          <div><span>证据匹配</span><strong class="evidence-score"></strong></div>
+          <div><span>证据覆盖</span><strong class="coverage-score"></strong></div>
+          <div><span>硬约束失败</span><strong class="hard-fail-score"></strong></div>
+        </div>
+        <div class="skill-tags"></div>
+        <details>
+          <summary>查看匹配依据与能力差距</summary>
+          <div class="evidence-columns">
+            <section><h4>匹配优势</h4><ul class="strength-list"></ul></section>
+            <section><h4>能力差距</h4><ul class="gap-list"></ul></section>
+          </div>
+          <div class="suggestion-box"><h4>改进建议</h4><ul class="suggestion-list"></ul></div>
+          <p class="job-source"></p>
+        </details>
+      </div>
+    </article>
+  </template>
+  <script src="/static/app.js" defer></script>
+</body>
+</html>

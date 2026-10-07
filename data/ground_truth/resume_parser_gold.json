@@ -1,0 +1,142 @@
+{
+  "schema_version": "1.0",
+  "description": "JobLens 虚构简历字段级标准答案",
+  "samples": [
+    {
+      "source": "data/resumes/01_cn_standard_single_page.pdf",
+      "expected": {
+        "basic_information": {"name": "Alex Chen", "phone": "13800000000", "email": "alex.chen@example.com", "github": "github.com/example"},
+        "target_roles": ["AI Agent Engineer"],
+        "education": [
+          {"school": "星河大学", "major": "计算机科学与技术", "degree": "bachelor"},
+          {"school": "云杉实验室", "major": "人机交互与软件工程", "degree": "unknown"}
+        ],
+        "work_experiences": [
+          {"organization": "哔哩哔哩技术有限公司", "position": "AI Agent Engineering Intern", "experience_type": "internship"},
+          {"organization": "华为技术有限公司", "position": "Agent Platform Intern", "experience_type": "internship"}
+        ],
+        "projects": ["MiniCode 彩蛋联动"],
+        "skills": ["Agent", "Prompt Engineering", "Python", "TypeScript", "Node.js", "LLM", "Git", "RAG"]
+      }
+    },
+    {
+      "source": "data/resumes/02_cn_dense_two_page.pdf",
+      "expected": {
+        "basic_information": {"name": "沈知遥", "phone": "138 0000 0000", "email": "shenzhiyao@example.com", "github": "github.com/example"},
+        "target_roles": ["Multimodal Algorithm Engineer"],
+        "education": [{"school": "东海科技大学", "major": "人工智能实验班", "degree": "unknown"}],
+        "work_experiences": [
+          {"organization": "字节跳动", "position": "多模态算法实习生", "experience_type": "internship"},
+          {"organization": "哔哩哔哩", "position": "多模态算法实习生", "experience_type": "internship"},
+          {"organization": "快手", "position": "算法研发实习生", "experience_type": "internship"},
+          {"organization": "美团", "position": "算法工程实习生", "experience_type": "internship"}
+        ],
+        "projects": ["ScenePilot", "CanvasForge", "OmniSearch"]
+      }
+    },
+    {
+      "source": "data/resumes/03_cn_data_analyst_single_page.pdf",
+      "expected": {
+        "basic_information": {"name": "陈思雨", "phone": "138 0000 0000", "email": "chensiyu@example.com", "city": "中国•上海"},
+        "target_roles": ["管培生", "数据分析师"],
+        "education": [{"school": "某双一流大学", "major": "计算机科学与技术", "degree": "bachelor"}],
+        "work_experiences": [
+          {"organization": "某网络科技有限公司", "position": "Python 工程师• 运营", "experience_type": "full_time"},
+          {"organization": "某物流速运有限公司", "position": "数据分析师• 综合管理员", "experience_type": "full_time"}
+        ],
+        "projects": ["电商用户消费行为数据分析项目"]
+      }
+    },
+    {
+      "source": "data/resumes/04_cn_backend_with_avatar.pdf",
+      "expected": {
+        "basic_information": {"name": "姓名", "phone": "1XX-XXXX-XXXX", "email": "your.email@example.com"},
+        "target_roles": ["XXXX 岗位"],
+        "education": [{"school": "示例大学", "major": "示例专业", "degree": "unknown"}],
+        "work_experiences": [
+          {"organization": "XX 证券股份有限公司", "position": "实习生", "experience_type": "internship"},
+          {"organization": "湖南 XX 科技股份有限公司", "position": "后端开发实习生", "experience_type": "internship"},
+          {"organization": "校团委学生会", "position": "创新创业部部长", "experience_type": "campus"}
+        ],
+        "projects": ["MoonInk 基于人工智能的在线日记与待办管理系统", "基于数据挖掘的电信客户流失分析与预测"]
+      }
+    },
+    {
+      "source": "data/resumes/05_cn_ai_researcher_two_page.pdf",
+      "expected": {
+        "basic_information": {"name": "无名氏", "phone": "+86 138xxxxxxxx", "email": "example@email.com"},
+        "target_roles": ["算法研究员"],
+        "education": [
+          {"school": "某知名理工大学", "major": "计算机科学与技术", "degree": "master"},
+          {"school": "某综合性大学", "major": "软件工程", "degree": "bachelor"}
+        ],
+        "work_experiences": [
+          {"organization": "某知名 AI 公司", "position": "高级算法工程师", "experience_type": "full_time"},
+          {"organization": "某互联网大厂", "position": "算法研究员", "experience_type": "full_time"},
+          {"organization": "某科技创业公司", "position": "软件工程师", "experience_type": "full_time"},
+          {"organization": "某 985 高校人工智能实验室", "position": "", "experience_type": "internship"}
+        ],
+        "publications": ["一种基于量子纠缠的深度神经网络加速方法", "全息投影增强的多模态情感识别系统", "基于时空折叠的超大规模预训练语言模型", "意念控制的神经符号推理引擎"]
+      }
+    },
+    {
+      "source": "data/resumes/06_cn_backend_standard.md",
+      "expected": {
+        "basic_information": {"name": "周子航", "phone": "13800000006", "email": "zhou.zihang@example.com", "city": "杭州", "github": "github.com/example-zhou"},
+        "target_roles": ["Java 后端开发工程师"],
+        "education": [{"school": "江南信息大学", "major": "软件工程", "degree": "bachelor"}],
+        "work_experiences": [{"organization": "云启科技有限公司", "position": "Java 后端开发工程师", "experience_type": "full_time"}],
+        "projects": ["智慧订单履约平台"],
+        "skills": ["Java", "Spring Boot", "JPA", "REST API", "MySQL", "Redis", "Git", "Docker", "Linux", "Python", "API testing"]
+      }
+    },
+    {
+      "source": "data/resumes/07_cn_ai_researcher.md",
+      "expected": {
+        "basic_information": {"name": "林若曦", "phone": "13900000007", "email": "lin.ruoxi@example.com", "city": "北京", "github": "github.com/example-lin"},
+        "target_roles": ["多模态算法实习生"],
+        "education": [{"school": "北辰理工大学", "major": "人工智能", "degree": "master"}],
+        "work_experiences": [{"organization": "星瀚智能研究院", "position": "多模态算法实习生", "experience_type": "internship"}],
+        "projects": ["VideoQA-RAG 视频问答系统"],
+        "publications": ["面向长视频理解的分层检索增强方法"],
+        "skills": ["multimodal learning", "computer vision", "natural language processing", "Python", "PyTorch", "OpenCV", "Transformers", "CUDA", "LLM", "RAG", "LoRA", "PEFT", "FastAPI", "Git", "Docker", "Linux"]
+      }
+    },
+    {
+      "source": "data/resumes/08_cn_frontend_table.md",
+      "expected": {
+        "basic_information": {"name": "赵一诺", "phone": "13700000008", "email": "zhao.yinuo@example.com", "city": "上海"},
+        "target_roles": ["前端开发工程师"],
+        "education": [{"school": "海川大学", "major": "计算机科学与技术", "degree": "bachelor"}],
+        "work_experiences": [{"organization": "云帆网络有限公司", "position": "前端开发实习生", "experience_type": "internship"}],
+        "projects": ["FlowBoard 低代码工作台"],
+        "skills": ["JavaScript", "TypeScript", "React", "Vue", "Git", "Docker", "Linux", "Node.js", "MySQL", "REST API", "data visualization"]
+      }
+    },
+    {
+      "source": "data/resumes/09_cn_devops_mixed.md",
+      "expected": {
+        "basic_information": {"name": "孙景行", "phone": "13600000009", "email": "sun.jingxing@example.com", "city": "深圳", "github": "github.com/example-sun"},
+        "target_roles": ["DevOps 工程师", "云平台开发工程师"],
+        "education": [{"school": "南岭科技大学", "major": "网络工程", "degree": "bachelor"}],
+        "work_experiences": [
+          {"organization": "拓云计算有限公司", "position": "DevOps 工程师", "experience_type": "full_time"},
+          {"organization": "校园开源镜像站", "position": "维护者", "experience_type": "campus"}
+        ],
+        "projects": ["ClusterLens 云资源巡检平台"],
+        "skills": ["Git", "Docker", "Kubernetes", "Linux", "Shell", "Python", "Go", "MySQL", "PostgreSQL", "Redis", "FastAPI", "pytest", "REST API"]
+      }
+    },
+    {
+      "source": "data/resumes/10_cn_data_engineer_bilingual.md",
+      "expected": {
+        "basic_information": {"name": "许清禾", "phone": "13500000010", "email": "xu.qinghe@example.com", "city": "成都", "github": "github.com/example-xu"},
+        "target_roles": ["Data Engineer", "数据工程师"],
+        "education": [{"school": "西陆大学", "major": "数据科学与大数据技术", "degree": "bachelor"}],
+        "work_experiences": [{"organization": "经纬数据有限公司", "position": "数据工程师", "experience_type": "full_time"}],
+        "projects": ["MetricFlow 数据质量平台"],
+        "skills": ["data engineering", "Python", "SQL", "MySQL", "PostgreSQL", "Hadoop", "Git", "Docker", "Linux", "Shell", "Pandas", "FastAPI", "REST API", "pytest"]
+      }
+    }
+  ]
+}

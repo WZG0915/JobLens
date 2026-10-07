@@ -1,11 +1,13 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
+  <!-- 页面基础元数据：声明中文、移动端宽度以及搜索摘要。 -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="JobLens——基于工具调用和RAG的实习岗位分析与面试准备Agent项目路线图">
   <title>JobLens 项目开发与学习路线图</title>
   <style>
+    /* 全局设计变量：集中维护颜色、阴影和圆角，避免在各组件中重复硬编码。 */
     :root {
       --ink: #162033;
       --muted: #637083;
@@ -23,6 +25,7 @@
       --radius: 16px;
     }
 
+    /* 基础重置与整页排版。 */
     * { box-sizing: border-box; }
 
     html { scroll-behavior: smooth; }
@@ -45,6 +48,7 @@
       font-size: .92em;
     }
 
+    /* 顶部主视觉区域。 */
     .hero {
       padding: 72px 24px 62px;
       color: #fff;
@@ -90,6 +94,7 @@
       font-weight: 600;
     }
 
+    /* 主体使用“左侧目录 + 右侧内容”的两栏布局。 */
     .layout {
       display: grid;
       grid-template-columns: 250px minmax(0, 1fr);
@@ -97,6 +102,7 @@
       padding: 34px 24px 72px;
     }
 
+    /* 目录在桌面端随页面滚动保持可见。 */
     nav {
       position: sticky;
       top: 20px;
@@ -121,6 +127,7 @@
 
     main { min-width: 0; }
 
+    /* 每个路线图主题使用独立白色卡片。 */
     section {
       margin-bottom: 24px;
       padding: 32px;
@@ -145,6 +152,7 @@
       font-size: 17px;
     }
 
+    /* 通用内容网格和信息卡片。 */
     .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
     .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
@@ -157,6 +165,7 @@
     .card strong { display: block; margin-bottom: 6px; }
     .card p { margin: 0; color: var(--muted); font-size: 14px; }
 
+    /* 使用等宽字体展示架构、流程和状态转移。 */
     .flow {
       overflow-x: auto;
       margin: 18px 0;
@@ -170,6 +179,7 @@
       white-space: pre;
     }
 
+    /* 单个开发阶段的时间、任务和验收标准容器。 */
     .phase {
       position: relative;
       margin-top: 20px;
@@ -203,6 +213,7 @@
       font-weight: 800;
     }
 
+    /* 三种提示框分别表示说明、风险和完成建议。 */
     .note, .warning, .success {
       margin: 16px 0;
       padding: 15px 17px;
@@ -228,6 +239,7 @@
       font-size: 13px;
     }
 
+    /* 窄屏下切换为单栏，保证手机阅读体验。 */
     @media (max-width: 860px) {
       .layout { grid-template-columns: 1fr; }
       nav { position: static; }
@@ -235,6 +247,7 @@
       section { padding: 24px 20px; }
     }
 
+    /* 打印时隐藏目录、移除阴影并保留关键颜色。 */
     @media print {
       body { background: #fff; }
       .hero { padding: 38px 24px; print-color-adjust: exact; }
@@ -246,6 +259,7 @@
   </style>
 </head>
 <body>
+  <!-- 页面头部：说明路线图主题和主要技术标签。 -->
   <header class="hero">
     <div class="hero-inner">
       <p class="eyebrow">Beginner-to-Portfolio Roadmap</p>
@@ -263,6 +277,7 @@
     </div>
   </header>
 
+  <!-- 主体布局：目录负责页内跳转，main 中保存完整路线图正文。 -->
   <div class="layout">
     <nav aria-label="目录">
       <strong>文档目录</strong>

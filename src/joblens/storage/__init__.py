@@ -1,2 +1,1 @@
-"""Local persistence for jobs and application status."""
-
+"""预留：阶段 3 存放岗位及投递状态的持久化代码。"""
